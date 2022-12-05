@@ -27,8 +27,9 @@ class Processor:
         """
         input_dir = self.data_dir + str(mode) + '.json'
         output_dir = self.data_dir + str(mode) + '.npz'
-        if os.path.exists(output_dir) is True:
-            return
+        if not self.config.is_rePreprocess:
+            if os.path.exists(output_dir) is True:
+                return
         word_list = []
         label_list = []
         with open(input_dir, 'r', encoding='utf-8') as f:

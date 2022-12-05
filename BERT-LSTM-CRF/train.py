@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 import config
 from model import BertNER
-from metrics import f1_score, bad_case,check_byRules
+from metrics import f1_score, bad_case,check_byRules,output_to_Console
 from transformers import BertTokenizer
 
 
@@ -125,7 +125,11 @@ def evaluate(dev_loader, model, mode='dev'):
     else:
         if config.use_rules:
             check_byRules(true_tags, pred_tags, sent_data)
+
         bad_case(true_tags, pred_tags, sent_data)
+
+        if config.output_to_Console:
+            output_to_Console(true_tags, pred_tags,sent_data)
         f1_labels, f1, p, r = f1_score(true_tags, pred_tags, mode)
         metrics['f1_labels'] = f1_labels
         metrics['f1'] = f1

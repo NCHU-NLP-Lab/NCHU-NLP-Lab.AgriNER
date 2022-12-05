@@ -4,17 +4,24 @@ import torch
 mode = 'test'                          # train/test/both
 data_dir = os.getcwd() + '/data/argi/'
 train_dir = data_dir + 'train.npz'
-test_dir = data_dir + 'test.npz'
+
+# test_dir = data_dir + 'test.npz'
+# test_dir = data_dir + 'demo_random_percentage_0.npz'
+test_dir = data_dir + 'demo.npz'
 # test_dir = data_dir + 'test_random_percentage_50.npz'
-files = ['train', 'test']
+files = ['train', 'demo']
+is_rePreprocess = True
 bert_model = 'pretrained_bert_models/bert-base-chinese/'
 # roberta_model = 'pretrained_bert_models/chinese_roberta_wwm_large_ext/'
 roberta_model = 'pretrained_bert_models/chinese-roberta-wwm-ext/'
-model_dir = os.getcwd() + '/experiments/argi/'
+
+# model_dir = os.getcwd() + '/experiments/argi/'
+model_dir = os.getcwd() + '/experiments/argi_v8/'
 log_dir = model_dir + 'train.log'
 case_dir = os.getcwd() + '/case/bad_case.txt'
 use_model = 'roberta'
-use_rules = False
+use_rules = False # 是否引入Rules layer
+output_to_Console = True # 是否將結果輸出到console，大量文本記得關閉。只在test的時候有效果。
 
 # 训练集、验证集划分比例
 dev_split_size = 0.1

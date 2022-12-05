@@ -175,6 +175,56 @@ def bad_case(y_true, y_pred, data):
             output.write("model pred: " + str(p) + "\n")
     logging.info("--------Bad Cases reserved !--------")
 
+def output_to_Console(y_true, y_pred, data):
+    for idx, (t,p) in enumerate(zip(y_true, y_pred)):
+        logging.info("\n--------case: " + str(idx + 1) +"--------")
+        logging.info("sentence: " +'\n'+ ''.join(data[idx]))
+        logging.info("\nModel pred:")
+        s = data[idx]
+        entityType = ''
+        entitys = []
+        is_find = False
+        for i, label in enumerate(p):
+            labels = label.split("-")
+            if label[0]=='B':
+                entityType = labels[1]
+                entitys.append(s[i])
+                is_find = True
+
+            if label[0]=='I':
+                entitys.append(s[i])
+
+            if is_find and label[0]=='O':
+                logging.info(''.join(entitys)+"("+entityType+")")
+                entityType = ''
+                entitys = []
+                is_find = False
+
+        if len(t) == t.count('O'):
+            logging.info("\nTrue pred: None")
+            continue
+        logging.info("\nTrue pred: ")
+        entityType = ''
+        entitys = []
+        for i, label in enumerate(t):
+            labels = label.split("-")
+            if label[0]=='B':
+                entityType = labels[1]
+                entitys.append(s[i])
+                is_find = True
+
+            if label[0]=='I':
+                entitys.append(s[i])
+
+            if is_find and label[0]=='O':
+                logging.info(''.join(entitys)+"("+entityType+")")
+                entityType = ''
+                entitys = []
+                is_find = False
+    logging.info('')
+
+
+
 def check_byRules(y_true, y_pred, data):
     if not os.path.exists(config.case_dir):
         os.system(r"touch {}".format(config.case_dir))  # 调用系统命令行来创建文件
@@ -183,13 +233,7 @@ def check_byRules(y_true, y_pred, data):
     for idx, (t, p) in enumerate(zip(y_true, y_pred)):
         sent = data[idx]
         y_pred[idx] = fix_pred_tags(sent,p)
-        # if t == p:
-        #     continue
-        # else:
-        #     output.write("bad case " + str(idx) + ": \n")
-        #     output.write("sentence: " + str(data[idx]) + "\n")
-        #     output.write("golden label: " + str(t) + "\n")
-        #     output.write("model pred: " + str(p) + "\n")
+
     logging.info("--------Check_byRules Done !--------")
 
 def fix_pred_tags(sent, pred_tags):
