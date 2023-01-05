@@ -1,6 +1,6 @@
 # NCHU-NLP-Lab.AgriNER
 
-項目介紹…
+考量文本亂碼之農業病蟲害領域命名實體識別研究
 
 Google Colab：https://colab.research.google.com/drive/1WEfaSlKLLhNMVBnm68w4omWaWHVFg_U0?usp=sharing
 
@@ -37,9 +37,4 @@ pip install -r requirements.txt
 python run.py
 ```
 
-模型運行結束後，最優模型和訓練log保存在./experiments/clue/路徑下。在測試集中的bad case保存在./case/bad_case.txt中。
-
-## Attention
-
-目前，當前模型的train.log已保存在./experiments/clue/路徑下，如要重新運行模型，請先將train.log移出當前路徑，以免覆蓋。
-
+模型運行結束後，最佳模型和訓練log保存在./experiments/clue/路徑下。在測試集中的bad case保存在./case/bad_case.txt中。
